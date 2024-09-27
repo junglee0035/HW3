@@ -1,6 +1,6 @@
 
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Jung Lee / 001 ***
  *
  * This java file is a Java object implementing simple AVL Tree.
  * You are to complete the deleteElement method.
@@ -342,25 +342,50 @@ class LUC_AVLTree {
      */
 
     private Node deleteElement(int value, Node node) {
+        if (node == null) {
+            return node;
+        }
 
-        /*
-         * ADD CODE HERE
-         * 
-         * NOTE, that you should use the existing coded private methods
-         * in this file, which include:
-         *      - minValueNode,
-         *      - getMaxHeight,
-         *      - getHeight,
-         *      - getBalanceFactor,
-         *      - LLRotation
-         *      - RRRotation,
-         *      - LRRotation,
-         *      - RLRotation.
-         *
-         * To understand what each of these methods do, see the method prologues and
-         * code for each. You can also look at the method InsertElement, as it has do
-         * do many of the same things as this method.
-         */
+        //Recursively search for the node that needs to be deleted
+        if (value < node.value) {
+            node.leftChild = deleteElement(value, node.leftChild);
+        } else if (value > node.value) {
+            node.rightChild = deleteElement(value, node.rightChild);
+        } else {
+            
+            //Node to be deleted found
+            //Node with one or no child case
+            
+            if (node.leftChild == null || node.rightChild == null) {
+                Node temp = node.leftChild != null ? node.leftChild : node.rightChild;
+               
+                //If no children, delete node
+                if (temp == null) {
+                    node = null;
+                } else {
+                    
+                    //One child case, replace node with its child
+                    node = temp; 
+                }
+            } else {
+                
+                //Node with two children case
+                //Get smallest value in right subtree
+                Node temp = minValueNode(node.rightChild);
+
+                //Copy to this node
+                node.value = temp.value;
+
+                //Delete inorder successor
+                node.rightChild = deleteElement(temp.value, node.rightChild);
+            }
+            //If tree had only one node=
+            if (node == null) {
+                return node;
+            }
+            
+        }
+
 
         return node;
     }
