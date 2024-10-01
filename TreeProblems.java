@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Jung Lee/ 001 ***
  *
  * This java file contains several simple tree problems that need to be
  * codified. These routines  must use the TreeMap and TreeSet library
@@ -20,14 +20,19 @@ public class TreeProblems {
    */
   
   public static Set<Integer> different(Set<Integer> setA, Set<Integer> setB) {
+    // Create new TreeSet to hold result
+    Set<Integer> result = new TreeSet<>(setA);
+    
+    //Add all elements from setB that are not in setA
+    result.addAll(setB);
 
-    // INSERT CODE HERE - DO NOT FORGET TO PLACE YOUR NAME ABOVE
-    //
-    // This can be done numerous ways, but once such will only that
-    // *several* lines of code. Hint: create two temporary TreeSets and utilize the
-    // methods retainAll(), addAll(), and removeAll(). But in the end, get something to work.
+    //Create another TreeSet to hold mutual/common elements of both sets
+    Set<Integer> common = new TreeSet<>(setA);
+    common.retainAll(setB);
 
-    return setA;
+    //Remove all commen elements from result to get symmetric difference
+
+    return result;
   }
 
 
@@ -39,10 +44,19 @@ public class TreeProblems {
    */
 
   public static void removeEven(Map<Integer, String> treeMap) {
+    // Use an iterator to safely remove elements while iterating over the keys
+    Iterator<Integer> iterator = treeMap.keySet().iterator();
 
-    // INSERT CODE HERE.
+    // Iterate over the keys of the TreeMap
+    while (iterator.hasNext()) {
+      Integer key = iterator.next();
 
-    return;
+      // If the key is even, remove the corresponding entry
+      if (key % 2 == 0) {
+        iterator.remove();
+
+      }
+    }
   }
 
 
@@ -54,11 +68,7 @@ public class TreeProblems {
    */
 
   public boolean treesEqual(Map<Integer, String> tree1,Map<Integer, String> tree2 ) {
-
-    // INSERT CODE HERE
-
-    return false;
-
+    return tree1.equals(tree2);
   }
 
 } // end treeProblems class

@@ -379,13 +379,39 @@ class LUC_AVLTree {
                 //Delete inorder successor
                 node.rightChild = deleteElement(temp.value, node.rightChild);
             }
-            //If tree had only one node=
+            //If tree had only one node
             if (node == null) {
                 return node;
             }
-            
-        }
 
+            //Update height of current node
+            node.height = getMaxHeight(getHeight(node.leftChild),getHeight(node.leftChild)) + 1;
+
+            //Get balance factor to check if node became unbalanced
+            int balance  = getBalanceFactor(node);
+
+            //If node is unbalanced, adjust rotation accordingly
+
+            //LL case
+            if (balance > 1 && getBalanceFactor(node.leftChild) >= 0) {
+                return LLRotation(node);
+            }
+
+            //LR case
+            if (balance > 1 && getBalanceFactor(node.leftChild) < 0) {
+                return LRRotation(node);
+            }
+
+            //RR case
+            if (balance < -1 && getBalanceFactor(node.rightChild) <= 0) {
+                return RRRotation(node);
+            }
+
+            //RL case
+            if (balance < -1 && getBalanceFactor(node.rightChild) > 0) {
+                return RLRotation(node);
+            }
+        }
 
         return node;
     }
