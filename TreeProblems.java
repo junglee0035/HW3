@@ -24,13 +24,18 @@ public class TreeProblems {
     Set<Integer> result = new TreeSet<>(setA);
     
     //Add all elements from setB that are not in setA
-    result.addAll(setB);
+    for (Integer element : setB) {
+      if (!setA.contains(element)) {
+        result.add(element);
+      }
+    }
 
-    //Create another TreeSet to hold mutual/common elements of both sets
-    Set<Integer> common = new TreeSet<>(setA);
-    common.retainAll(setB);
-
-    //Remove all commen elements from result to get symmetric difference
+    //Remove common elements
+    for (Integer element : setA) {
+      if (setB.contains(element)) {
+        result.remove(element);
+      }
+    }
 
     return result;
   }
