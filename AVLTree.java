@@ -343,6 +343,8 @@ class LUC_AVLTree {
 
     private Node deleteElement(int value, Node node) {
         if (node == null) {
+
+            //Value not found case
             return node;
         }
 
@@ -355,18 +357,8 @@ class LUC_AVLTree {
             
             //Node to be deleted found
             //Node with one or no child case
-            
             if (node.leftChild == null || node.rightChild == null) {
-                Node temp = node.leftChild != null ? node.leftChild : node.rightChild;
-               
-                //If no children, delete node
-                if (temp == null) {
-                    node = null;
-                } else {
-                    
-                    //One child case, replace node with its child
-                    node = temp; 
-                }
+                node = (node.leftChild != null) ? node.leftChild : node.rightChild;
             } else {
                 
                 //Node with two children case
@@ -376,21 +368,22 @@ class LUC_AVLTree {
                 //Copy to this node
                 node.value = temp.value;
 
-                //Delete inorder successor
+                //Delete successor
                 node.rightChild = deleteElement(temp.value, node.rightChild);
             }
-            //If tree had only one node
+
+            //If node is null after deletion
             if (node == null) {
                 return node;
             }
 
             //Update height of current node
-            node.height = getMaxHeight(getHeight(node.leftChild),getHeight(node.leftChild)) + 1;
+            node.height = getMaxHeight(getHeight(node.leftChild),getHeight(node.rightChild)) + 1;
 
             //Get balance factor to check if node became unbalanced
             int balance  = getBalanceFactor(node);
 
-            //If node is unbalanced, adjust rotation accordingly
+            //If node is unbalanced, adjust rotation to balance tree
 
             //LL case
             if (balance > 1 && getBalanceFactor(node.leftChild) >= 0) {
